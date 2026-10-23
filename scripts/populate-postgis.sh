@@ -17,6 +17,8 @@ for v in STATE DATABASE REGION DB_HOST DB_PORT DB_USER; do
   fi
 done
 export PGPASSWORD="${PGPASSWORD:-${DB_PASSWORD:-}}"
+# Show warnings and errors only, not notices such as "table ... does not exist, skipping".
+export PGOPTIONS="-c client_min_messages=warning"
 
 PSQL=(psql -q -v ON_ERROR_STOP=1 -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER")
 
